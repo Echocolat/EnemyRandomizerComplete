@@ -1,0 +1,6 @@
+[Definition]
+titleIds = 00050000101C9300,00050000101C9400,00050000101C9500
+name = Enemy Randomizer v2.0 by Echocolat
+path = The Legend of Zelda: Breath of the Wild/Mods/EnemyRandomizer v2.0 by Echocolat
+description = Randomizes every enemy in MainField that is not a boss or a dragon.
+version = 4

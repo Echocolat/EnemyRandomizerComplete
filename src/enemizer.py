@@ -50,7 +50,7 @@ class Enemizer:
                     func2(Path(src).read_bytes(), dst_path.stem.split("_")[0])
                 )
 
-        "Successfully generated:"
+        print("Successfully generated:")
         for key, value in self.generated.items():
             print(f"{key}: {value}")
 
@@ -85,6 +85,7 @@ class Enemizer:
             if self.config.random_weapons == True:
                 self.set_weapons(unit_config)
 
+        print(f"Randomized '{map_unit}'")
         return oead.yaz0.compress(oead.byml.to_binary(to_oead(data), True))
 
     def get_randomized_pack(self, data: bytes, _) -> bytes:
@@ -103,6 +104,7 @@ class Enemizer:
                 sarc_writer.files[file.name] = oead.Bytes(file.data)
 
         # Serialize sarc file
+        print(f"Randomized '{_}'")
         _, sarc_bytes = sarc_writer.write()
         return sarc_bytes
 
@@ -148,14 +150,28 @@ class Enemizer:
         # Randomize the Talus ore
         # and sleep positions
         if "Golem" in enemy and "Little" not in enemy and enemy != "Enemy_Golem_Fire_R":
+
+            # Force set parameters
+            unit_config["!Parameters"] = (
+                unit_config["!Parameters"] if "!Parameters" in unit_config else {}
+            )
+
+            # Set sleep pos mode
             unit_config["!Parameters"]["GolemSleepType"] = choice(
                 ["SleepForward_B", "SleepForward_A"]
             )
+
+            # Set ore pos mode
             unit_config["!Parameters"]["GolemWeakPointLocation"] = choice(
                 ["Point_A", "Point_B", "Point_C"]
             )
 
         if "Giant" in enemy:
+
+            # Force set parameters
+            unit_config["!Parameters"] = (
+                unit_config["!Parameters"] if "!Parameters" in unit_config else {}
+            )
 
             # Set param types
             armors = {"GiantArmor1": "L", "GiantArmor2": "R"}

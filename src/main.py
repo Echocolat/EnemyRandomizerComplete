@@ -73,21 +73,22 @@ def main():
     flag_util.generate(Generator(get_settings("wiiu")))
 
     # Install mod
-    print("Installing. . .")
-    mod_path = Path("Enemized\\info.json")
-    mod_meta = {
-        "name": "Enemizer v2 by Echocolat",
-        "image": "",
-        "url": "",
-        "desc": "",
-        "version": "2.0.0",
-        "options": {},
-        "depends": [],
-        "showCompare": False,
-        "showConvert": False,
-        "platform": "wiiu" if get_settings("wiiu") == True else "switch",
-        "id": "",
-    }
+    if (input("Install mod? (Y/n) ").lower() == "y"):
+        print("Installing. . .")
+        mod_path = Path("Enemized\\info.json")
+        mod_meta = {
+            "name": "Enemizer v2 by Echocolat",
+            "image": "",
+            "url": "",
+            "desc": "",
+            "version": "2.0.0",
+            "options": {},
+            "depends": [],
+            "showCompare": False,
+            "showConvert": False,
+            "platform": "wiiu" if get_settings("wiiu") == True else "switch",
+            "id": "",
+        }
 
     mod_path.write_text(json.dumps(mod_meta))
     install_mod(mod=mod_path, merge_now=True)

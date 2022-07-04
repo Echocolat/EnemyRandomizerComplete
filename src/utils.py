@@ -13,6 +13,17 @@ DEFAULTS = byml.from_binary(
     yaz0.decompress(Path(f"{get_src_dir()}\\data\\defaults.sbyml").read_bytes())
 )
 
+def get_item_tables(prefixes: list) -> list:
+
+    if type(prefixes) is str:
+        return get_item_table(prefixes)
+
+    ret: list = []
+    for prefix in prefixes:
+        ret += get_item_table(prefix)
+
+    return ret
+
 def get_item_table(prefix: str) -> list:
 
     count = -1

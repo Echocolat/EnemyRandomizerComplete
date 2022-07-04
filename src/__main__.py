@@ -3,7 +3,7 @@ import botw_flag_util.generator as flag_util
 import json
 import shutil
 
-from bcml.install import install_mod
+from bcml.install import install_mod, link_master_mod
 from bcml.util import get_settings, get_game_file
 from enemizer.enemizer import Enemizer
 from enemizer.enemizer_config import EnemizerConfig
@@ -93,6 +93,8 @@ def main():
 
     mod_path.write_text(json.dumps(mod_meta))
     install_mod(mod=mod_path, merge_now=True)
+    link_master_mod()
+    
 
 
 if __name__ == "__main__":

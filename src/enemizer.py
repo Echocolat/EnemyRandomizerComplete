@@ -1,9 +1,9 @@
 import oead
 
-from enemizer_config import EnemizerConfig
+from enemizer.enemizer_config import EnemizerConfig
 from pathlib import Path
 from random import randint, choice
-from utils import DEFAULTS, get_evaluated_weights, get_item_table, is_enemy, to_oead
+from enemizer.utils import DEFAULTS, get_evaluated_weights, get_item_table, is_enemy, to_oead, get_item_tables
 
 
 class Enemizer:
@@ -214,9 +214,17 @@ class Enemizer:
 
     def set_weapons(self, unit_config: dict) -> dict:
 
+        # SKIP NON WEAPON ACTORS
+
         # Skip actors without parameters
         if "!Parameters" not in unit_config:
-            return unit_config
+
+            # 1/3 chance of not adding weapons
+            # in cases where no parameters exist
+            if randint(0, 3) != 0:
+                unit_config["!Parameters"] = {}
+            else:
+                return unit_config
 
         cfn = unit_config["UnitConfigName"]
         hand_weapons = [
@@ -242,7 +250,7 @@ class Enemizer:
             )
 
         # Set Hinox weapons
-        if "Giant" in cfn:
+        elif "Giant" in cfn:
             unit_config = self.set_weapons_any(unit_config, all_weapons, range(3, 5))
 
         # Set long sword only actors
@@ -262,32 +270,35 @@ class Enemizer:
             # Always set the arrow for all enemies
             unit_config["!Parameters"]["ArrowName"] = choice(self.arrow_weights)
 
+            # Create 1/3 chance var
+            arsenal = randint(0, 2)
+
             # Always set the bow for Lynels
             if "Enemy_Lynel" in cfn:
                 unit_config = self.set_weapons_mapped(unit_config, {3: "Weapon_Bow_"})
+                arsenal = randint(0, 1) if arsenal == 2 else arsenal
 
-            # Choose randonly between a shield and sword or a sword/lsword/spear.
-            if choice([True, False]) == True:
+            # Choose randonly between a shield and sword and a sword/lsword/spear.
+            if arsenal == 0:
                 unit_config = self.set_weapons_mapped(
                     unit_config,
                     {
-                        1: "Weapon_Sword_",
-                        4 if "Enemy_Lynel" in cfn else 2: "Weapon_Shield_",
+                        1: ["Weapon_Sword_"],
+                        4 if "Enemy_Lynel" in cfn else 2: ["Weapon_Shield_"],
                     },
                 )
-            else:
+            elif arsenal == 1:
                 unit_config = self.set_weapons_mapped(
                     unit_config,
                     {1: ["Weapon_Sword_", "Weapon_Lsword_", "Weapon_Spear_"]},
                 )
+            else:
+                unit_config = self.set_weapons_mapped(unit_config, {1: "Weapon_Bow_"})
 
         return unit_config
 
     def set_weapons_any(self, unit_config: dict, prefixes: list, set_num):
-        weapons: list = []
-        for prefix in prefixes:
-            weapons += get_item_table(prefix)
-
+        weapons: list = get_item_tables(prefixes)
         equip_items = [
             f"EquipItem{i+1}"
             for i in (range(set_num) if type(set_num) is int else set_num)
@@ -304,10 +315,6 @@ class Enemizer:
         for key, value in map.items():
             unit_config["!Parameters"][
                 key if type(key) is str else f"EquipItem{key}"
-            ] = choice(
-                get_item_table(value)
-                if type(value) is str
-                else [get_item_table(i) for i in value]
-            )
+            ] = choice(get_item_tables(value))
 
         return unit_config

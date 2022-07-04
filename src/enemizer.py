@@ -50,11 +50,11 @@ class Enemizer:
                     func2(Path(src).read_bytes(), dst_path.stem.split("_")[0])
                 )
 
-        print("Successfully generated:")
+        print("\n\nSuccessfully generated:")
         for key, value in self.generated.items():
             print(f"{key}: {value}")
 
-    def get_randomized_map(self, data: bytes, map_unit: str = "") -> bytes:
+    def get_randomized_map(self, data: bytes, map_unit: str = None) -> bytes:
 
         # Deserialize map file
         data = oead.byml.from_binary(oead.yaz0.decompress(data))
@@ -85,7 +85,8 @@ class Enemizer:
             if self.config.random_weapons == True:
                 self.set_weapons(unit_config)
 
-        print(f"Randomized '{map_unit}'")
+        if map_unit is not None:
+            print(f"Randomized '{map_unit}'", end="\r")
         return oead.yaz0.compress(oead.byml.to_binary(to_oead(data), True))
 
     def get_randomized_pack(self, data: bytes, _) -> bytes:
@@ -103,8 +104,10 @@ class Enemizer:
             else:
                 sarc_writer.files[file.name] = oead.Bytes(file.data)
 
+        # Log changes
+        print(f"Randomized '{_}'", end="\r")
+
         # Serialize sarc file
-        print(f"Randomized '{_}'")
         _, sarc_bytes = sarc_writer.write()
         return sarc_bytes
 
@@ -179,7 +182,7 @@ class Enemizer:
             # Purge old parameters
             for param in armors:
                 if param in unit_config["!Parameters"]:
-                    unit_config["!Parameters"].pop(param)
+                    dict(unit_config["!Parameters"]).pop(param)
 
                 # Randomize giant armor
                 if randint(0, 2) != 0:

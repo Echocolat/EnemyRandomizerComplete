@@ -1,4 +1,4 @@
-VERSION = "1.0.0"  # Version const for publish script
+VERSION = "2.0.4"  # Version const for publish script
 
 from setuptools import setup
 
@@ -23,7 +23,7 @@ setup(
         ],
     },
     classifiers=[
-        "Development Status :: 5 - Stable",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent",

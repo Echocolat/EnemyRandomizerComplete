@@ -1,9 +1,9 @@
 import oead
 
-from enemizer_config import EnemizerConfig
+from enemizer.enemizer_config import EnemizerConfig
 from pathlib import Path
 from random import randint, choice
-from utils import DEFAULTS, get_evaluated_weights, get_item_table, is_enemy, to_oead
+from enemizer.utils import DEFAULTS, get_evaluated_weights, get_item_table, is_enemy, to_oead
 
 
 class Enemizer:

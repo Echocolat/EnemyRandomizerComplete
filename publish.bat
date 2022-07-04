@@ -65,7 +65,7 @@ START "BUILD-WHEEL" /WAIT /B "python.exe" "-m" "build"
 ECHO Publishing...
 START "UPLOAD-PYPI" /WAIT /B "python.exe" "-m" "twine" "upload" "--verbose" "--repository" "%repo%" "dist/*"
 
-RMDIR /S /Q .\ModFixer.egg-info
+RMDIR /S /Q .\Enemizer.egg-info
 RMDIR /S /Q .\dist
 
 ECHO.

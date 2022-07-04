@@ -1,5 +1,9 @@
+import json
+from bcml.install import install_mod
+from bcml.util import get_settings
 from enemizer import Enemizer
 from enemizer_config import EnemizerConfig
+from pathlib import Path
 
 WELCOME = str(
     "    /\\                          /\\\n"
@@ -45,7 +49,7 @@ def main():
                 + "\t\tEnter a number from 1-100 (leave empty for the default value): "
             )
 
-            while (type(_boss_prob) is not int) or _boss_prob != "":
+            while (type(_boss_prob) is not int) and _boss_prob != "":
                 _boss_prob = input(
                     f"{_boss_prob} is not a valid number. Please enter a number: "
                 )
@@ -53,6 +57,24 @@ def main():
             opt.boss_prob = int(_boss_prob) if _boss_prob != "" else 23
 
     Enemizer(opt).randomize()
+
+    mod_path = Path("Enemizer\\info.json")
+    mod_meta = {
+        "name": "Enemized v2 by Echocolat",
+        "image": "",
+        "url": "",
+        "desc": "",
+        "version": "2.0.0",
+        "options": {},
+        "depends": [],
+        "showCompare": False,
+        "showConvert": False,
+        "platform": "wiiu" if get_settings("wiiu") == True else "switch",
+        "id": "",
+    }
+
+    mod_path.write_text(json.dumps(mod_meta))
+    install_mod(mod=mod_path, merge_now=True)
 
 
 if __name__ == "__main__":

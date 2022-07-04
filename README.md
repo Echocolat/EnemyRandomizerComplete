@@ -9,8 +9,10 @@ _Big thanks to ArchLeaders for his help and MintLightning for cleaning up the sc
 
 ### How to use:
 1. Launch Enemy_Randomizer.py and select your options. 
-2. If you want the enemies to not respawn each time you load a save, you have to copy `WhereYourUpdateBotWIs\content\Pack\Bootup.pack` and paste it inside `Enemized\content\Pack`.
-   - Install the package `botw_flag_util`, and use the command: `botw_flag_util generate [path to the mod's root] -r 1 1 -b` in the `Enemized` folder.
+2. If you want the enemies to not respawn each time you load a save:
+   - Copy `WhereYourUpdateBotWIs\content\Pack\Bootup.pack` and paste it inside `Enemized\content\Pack`.
+   - Install the package `botw_flag_util`, and use the command:
+     - `botw_flag_util generate [path to the mod's root] -r 1 1 -b` in the `Enemized` folder.
 3. Use BCML to install the rules.txt file inside the folder "Enemy Randomizer v2".
 4. Activate the mod (if you're using Chaos mode, it is strongly recommanded to use the Extended Memory community graphic pack) and enjoy!!!
 	

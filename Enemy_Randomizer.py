@@ -531,6 +531,10 @@ def copyValues(enemy, mapData, index):
         del mapData['Objs'][index]['OnlyOne']
     if 'Scale' in mapData['Objs'][index]:
         del mapData['Objs'][index]['Scale']
+    if 'Guardian_C' in mapData['Objs'][index]['UnitConfigName']:
+        mapData['Objs'][index]['Translate'][1] = oead.F32(float(mapData['Objs'][index]['Translate'][1]) + 30.0)
+    if 'Keese' in mapData['Objs'][index]['UnitConfigName']:
+        mapData['Objs'][index]['Translate'][1] = oead.F32(float(mapData['Objs'][index]['Translate'][1]) + 2.5)
 
 def randomizeWeapon(enemy, mapData, index):
     # Mini-Guardian

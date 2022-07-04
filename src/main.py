@@ -1,9 +1,14 @@
+import botw_flag_util.generator as flag_util
 import json
+import shutil
+
 from bcml.install import install_mod
-from bcml.util import get_settings
+from bcml.util import get_settings, get_game_file
 from enemizer import Enemizer
 from enemizer_config import EnemizerConfig
+from generator import Generator
 from pathlib import Path
+
 
 WELCOME = str(
     "    /\\                          /\\\n"
@@ -56,11 +61,22 @@ def main():
 
             opt.boss_prob = int(_boss_prob) if _boss_prob != "" else 23
 
+    # Randomize enemies
+    print("Randomizing. . .")
     Enemizer(opt).randomize()
 
-    mod_path = Path("Enemizer\\info.json")
+    # Generate flags
+    print("Generating flags. . .")
+    bootup_path = Path("Enemized\\content\\Pack\\Bootup.pack")
+    bootup_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(get_game_file("Pack/Bootup.pack"), bootup_path)
+    flag_util.generate(Generator(get_settings("wiiu")))
+
+    # Install mod
+    print("Installing. . .")
+    mod_path = Path("Enemized\\info.json")
     mod_meta = {
-        "name": "Enemized v2 by Echocolat",
+        "name": "Enemizer v2 by Echocolat",
         "image": "",
         "url": "",
         "desc": "",

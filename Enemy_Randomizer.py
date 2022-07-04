@@ -339,6 +339,8 @@ tableSword = ["Weapon_Sword_"+i for i in [
 
 tableArrow = ["NormalArrow","FireArrow","IceArrow","ElectricArrow","BombArrow","AncientArrow"]
 
+tableWeapon = tableBow + tableLsword + tableShield + tableSpear + tableSword
+
 hasTableOther = ["Enemy_Bokoblin_Dark","Enemy_Bokoblin_Junior","Enemy_Bokoblin_Middle","Enemy_Bokoblin_Senior","Enemy_Bokoblin_Gold", "Enemy_Bokoblin_Bone_Junior_AllDay",
                  "Enemy_Lizalfos_Dark","Enemy_Lizalfos_Electric","Enemy_Lizalfos_Fire","Enemy_Lizalfos_Ice","Enemy_Lizalfos_Junior","Enemy_Lizalfos_Middle", "Enemy_Lizalfos_Bone_Junior", "Enemy_Lizalfos_Senior", "Enemy_Lizalfos_Gold",
                  "Enemy_Moriblin_Junior","Enemy_Moriblin_Middle","Enemy_Moriblin_Senior","Enemy_Moriblin_Dark","Enemy_Moriblin_Gold", "Enemy_Moriblin_Bone_Junior"]
@@ -506,6 +508,21 @@ def randomEnemyPick(zone):
 def copyValues(enemy, mapData, index):
     if "Guardian_A_Fixed" in mapData['Objs'][index]['UnitConfigName']:
         mapData['Objs'][index]['Translate'][1] = oead.F32(float(mapData['Objs'][index]['Translate'][1]) + 2.5)
+    if "Golem" in enemy[0] and "Little" not in enemy[0] and enemy[0] !="Enemy_Golem_Fire_R":
+        enemy[1]["GolemSleepType"] = random.choice(["SleepForward_B","SleepForward_A"])
+        enemy[1]["GolemWeakPointLocation"] = random.choice(["Point_A","Point_B","Point_C"])
+    elif "Giant" in enemy[0]:
+        enemy[1]["EquipItem3"] = random.choice(tableWeapon)
+        enemy[1]["EquipItem4"] = random.choice(tableWeapon)
+        enemy[1]["EquipItem5"] = random.choice(tableWeapon)
+        if "GiantArmor1" in enemy[1]:
+            del enemy[1]["GiantArmor1"]
+        if "GiantArmor2" in enemy[1]:
+            del enemy[1]["GiantArmor2"]
+        if random.randint(0,2) != 0:
+            enemy[1]["GiantArmor1"] = random.choice(["GiantGreave_Wood_R","GiantGreave_Iron_R"])
+        if random.randint(0,2) != 0:
+            enemy[1]["GiantArmor2"] = random.choice(["GiantGreave_Wood_L","GiantGreave_Iron_L"])
     mapData['Objs'][index]['UnitConfigName'] = enemy[0]
     mapData['Objs'][index]['!Parameters'] = enemy[1]
     if 'LinksToRail' in mapData['Objs'][index]:

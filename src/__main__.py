@@ -1,4 +1,3 @@
-import os
 import botw_flag_util.generator as flag_util
 import json
 import shutil

@@ -6,26 +6,6 @@ from random import randint, choice
 from utils import DEFAULTS, get_evaluated_weights, get_item_table, is_enemy, to_oead
 
 
-# detected = {}
-
-generated = {
-    "Bokoblin": 0,
-    "Moriblin": 0,
-    "Lizalfos": 0,
-    "Lynel": 0,
-    "Keese": 0,
-    "Chuchu": 0,
-    "Golem_Little": 0,
-    "Guardian_Mini": 0,
-    "Guardian": 0,
-    "Octarock": 0,
-    "Wizzrobe": 0,
-    "Giant": 0,
-    "Golem": 0,
-    "Sandworm": 0,
-}
-
-
 class Enemizer:
     def __init__(self, ops: EnemizerConfig):
         self.arrow_weights = get_evaluated_weights("Arrows")
@@ -69,6 +49,10 @@ class Enemizer:
                 dst_path.write_bytes(
                     func2(Path(src).read_bytes(), dst_path.stem.split("_")[0])
                 )
+
+        "Successfully generated:"
+        for key, value in self.generated.items():
+            print(f"{key}: {value}")
 
     def get_randomized_map(self, data: bytes, map_unit: str = "") -> bytes:
 
@@ -182,7 +166,7 @@ class Enemizer:
                     unit_config["!Parameters"].pop(param)
 
                 # Randomize giant armor
-                if randint[0, 2] != 0:
+                if randint(0, 2) != 0:
                     unit_config["!Parameters"][
                         param
                     ] = f"GiantGreave_{choice(['Wood', 'Iron'])}_{armors[param]}"

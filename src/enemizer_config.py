@@ -75,6 +75,6 @@ class EnemizerConfig:
             return {}
 
         return {
-            f"{get_game_dir()}\\Pack\\Remains{element}.pack": f"Enemized\\aoc\\0010\\Pack\\Dungeon{element}.pack"
+            f"{get_game_dir()}\\Pack\\Remains{element}.pack": f"Enemized\\aoc\\0010\\Pack\\Remains{element}.pack"
             for element in ["Electric", "Fire", "Water", "Wind"]
         }

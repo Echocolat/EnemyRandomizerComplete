@@ -5,4 +5,5 @@ class Generator:
     actor: bool = False
     revival: list = [1, 1]
     directory: str = "Enemized"
-    big_endian: bool
+    bigendian: bool = True
+    verbose: bool = False

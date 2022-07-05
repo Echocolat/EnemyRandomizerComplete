@@ -54,12 +54,14 @@ def main():
                 + "\t\tEnter a number from 1-100 (leave empty for the default value): "
             )
 
-            while (type(_boss_prob) is not int) and _boss_prob != "":
-                _boss_prob = input(
-                    f"{_boss_prob} is not a valid number. Please enter a number: "
-                )
-
-            opt.boss_prob = int(_boss_prob) if _boss_prob != "" else 23
+            while (_boss_prob != ""):
+                try:
+                    opt.boss_prob = int(_boss_prob)
+                    break
+                except:
+                    _boss_prob = input(
+                        f"{_boss_prob} is not a valid number. Please enter a number: "
+                    )
 
     # Randomize enemies
     print("Randomizing. . .")

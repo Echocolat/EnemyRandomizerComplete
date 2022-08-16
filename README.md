@@ -8,7 +8,7 @@ _Big thanks to ArchLeaders for his help and MintLightning for cleaning up the sc
 3. **Enemizer** _(`pip install enemizer`)_
 
 ### How to use:
-1. Open a cmd/terminal in any folder and type `enimize`.
+1. Open a cmd/terminal in any folder and type `enemize`.
 2. Follow the prompts and wait for completion.
 3. Enjoy **Enemizer**!!
 	

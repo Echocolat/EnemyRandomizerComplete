@@ -1,4 +1,4 @@
-VERSION = "2.1.1"  # Version const for publish script
+VERSION = "2.1.3"  # Version const for publish script
 
 from setuptools import setup
 
